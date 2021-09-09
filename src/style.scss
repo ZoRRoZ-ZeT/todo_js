@@ -1,0 +1,211 @@
+:root {
+    --blue: 3, 169, 244;
+    --darkblue: 33, 150, 243;
+    --red: 244, 67, 54;
+    --darkred: 229, 57, 53;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.application {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 5px;
+    
+    &__title {
+        font-size: 22px;
+        text-align: center;
+        margin: 30px 0;
+    }
+
+    &__body {
+        background-color: white;
+
+        &-list {
+            display: flex;
+            flex-direction: column;
+            list-style: none;
+        }
+    }
+
+    &__footer {
+        display: flex;
+        position: relative;
+        padding: 5px;
+        align-items: center;
+
+        &-count {
+            position: absolute;
+            margin-left: 15px;
+            color: grey;
+        }
+
+        &-clear {
+            font-size: 14px;
+            position: absolute;
+            right: 15px;
+            color: grey;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.filters {
+    margin: 10px 0;
+    flex: 1;
+    text-align: center;
+
+    &-button {
+        background: white;
+        padding: 0.35rem 0.5rem;
+        border: none;
+        cursor: pointer;
+        margin: 0 5px;
+    }
+
+    &-button.active {
+        box-shadow: 0 0 5px 0px rgb(0 0 0 / 52%);
+    }
+}
+
+.form {
+    display: flex;
+    align-items: center;
+
+    &__check {
+        position: absolute;
+        transform: rotate(90deg);
+        background-color: white;
+        border: none;
+        margin-left: 15px;
+        cursor: pointer;
+
+        &::before {
+            content: '❯';
+            font-size: 22px;
+            padding: 5px;
+        }
+    }
+
+    &__input {
+        padding: .375rem .75rem;
+        padding-left: 55px;
+        padding-top: 10px;
+        font-size: 16px;
+        line-height: 1.5;
+        outline: none;
+        transition: 0.3s all;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        width: 100%;
+
+        &.invalid {
+            border-color: red !important;
+        }
+    }
+}
+
+.shadow {
+    box-shadow: 0 0 10px 2px rgb(0 0 0 / 34%);
+}
+
+.list-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    color: grey;
+
+    &:hover .destroy{
+        visibility: visible;
+    }
+
+    &__block {
+        display: flex;
+        align-items: center;
+
+        &-toggle {
+            min-width: 20px;
+            min-height: 20px;
+            margin-right: 15px;
+            border-radius: 50%;
+            appearance: none;
+            -webkit-appearance: none;
+            border: 1px solid #b9b9b9;
+            cursor: pointer;
+
+            &:checked {
+                background-color: rgb(var(--blue));
+            }
+        }
+
+        &-toggle:checked ~ &__label {
+            text-decoration: line-through;
+            color: rgb(128 128 128 / 55%);
+        }
+
+        &-label {
+            padding: 10px;
+        }
+
+        &-label.clicked {
+            display: none;
+        }
+
+        &-label.clicked ~ &-edit {
+            display: block;
+        }
+
+        &-edit {
+            display: none;
+            padding: .375rem .75rem;
+            font-size: 16px;
+            line-height: 1.5;
+            outline: none;
+            transition: 0.3s all;
+            border: 1px solid #ced4da;
+            border-radius: .25rem;
+            width: 100%;
+        }
+    }
+}
+
+.destroy {
+    visibility: hidden;
+    margin-left: auto;
+}
+
+.btn {
+    padding: 5px;
+    color: white;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &-blue {
+        background-color: rgb(var(--blue));
+        border: 2px solid rgba(var(--blue), 0.63);
+
+        &:active {
+            background-color: rgb(var(--darkblue));
+        }
+    }
+    
+    &-red {
+        background-color: rgb(var(--red));
+        border: 2px solid rgb(var(--red), 0.63);
+
+        &:active {
+            background-color: rgb(var(--darkred));
+        }
+    }
+}

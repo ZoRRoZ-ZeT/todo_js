@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+    <section class="application">
+        <div class="application__title">
+            <h1>To Do Application</h1>
+        </div>
+        <div class="shadow">
+            <div class="application__body">
+                <form class="form">
+                    <button type="button" class="form__check" id="checkButton"></button>
+                    <input class="form__input" type="text" name="task" id="taskInput" placeholder="What needs to be done?">
+                </form>
+                <ul class="application__body-list" id="list">
+
+                </ul>
+            </div>
+            <div class="application__footer">
+                <span class="application__footer-count">0 items</span>
+                <div class="filters">
+                    <button class="filters-button" id="allButton">All</button>
+                    <button class="filters-button" id="activeButton">Active</button>
+                    <button class="filters-button" id="completeButton">Complete</button>
+                </div>
+                <span class="application__footer-clear">Clear completed</span>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
