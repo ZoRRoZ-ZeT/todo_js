@@ -8,27 +8,27 @@
 </head>
 <body>
     <section class="application">
-        <div class="application__title">
+        <div class="title">
             <h1>To Do Application</h1>
         </div>
         <div class="shadow">
-            <div class="application__body">
-                <form class="form">
-                    <button type="button" class="form__check" id="checkButton"></button>
-                    <input class="form__input" type="text" name="task" id="taskInput" placeholder="What needs to be done?">
+            <div class="body">
+                <form class="body__form add-form">
+                    <button type="button" class="add-form__check" id="checkButton"></button>
+                    <input class="add-form__input" type="text" name="task" id="taskInput" placeholder="What needs to be done?">
                 </form>
-                <ul class="application__body-list" id="list">
+                <ul class="body__list task-list" id="list">
 
                 </ul>
             </div>
-            <div class="application__footer">
-                <span class="application__footer-count">0 items</span>
+            <div class="footer">
+                <span class="footer__count">0 items</span>
                 <div class="filters">
-                    <button class="filters-button" id="allButton">All</button>
-                    <button class="filters-button" id="activeButton">Active</button>
-                    <button class="filters-button" id="completeButton">Complete</button>
+                    <button class="filters__button" id="allButton">All</button>
+                    <button class="filters__button" id="activeButton">Active</button>
+                    <button class="filters__button" id="completeButton">Complete</button>
                 </div>
-                <span class="application__footer-clear">Clear completed</span>
+                <span class="footer__clear">Clear completed</span>
             </div>
         </div>
     </section>

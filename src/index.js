@@ -4,14 +4,14 @@ const input = document.getElementById('taskInput');
 const list = document.getElementById('list');
 const checkButton = document.getElementById('checkButton');
 
-const footer = document.querySelector('.application__footer');
-const clearButton = document.querySelector('.application__footer-clear');
+const footer = document.querySelector('.footer');
+const clearButton = document.querySelector('.footer__clear');
 
 const allButton = document.getElementById('allButton');
 const activeButton = document.getElementById('activeButton');
 const completeButton = document.getElementById('completeButton');
 
-const form = document.querySelector('form');
+const form = document.querySelector('.add-form');
 
 let tasks = [];
 let currentId = 0;
@@ -42,16 +42,16 @@ const changeValue = (target, newValue) => {
 const createItem = (name, id, isChecked) => {
   const item = document.createElement('li');
   const checked = isChecked ? 'checked' : '';
-  item.classList.add('list-item');
+  item.classList.add('task-list__item');
   item.innerHTML = `
-        <div class="list-item__block">
-            <input class="list-item__block-toggle" type="checkbox" name="toggler" task="${id}" ${checked}>
-            <label class="list-item__block-label">${name}</label>
-            <input type="text" class="list-item__block-edit" name="editer" value="${name}">
+        <div class="item">
+            <input class="item__toggle" type="checkbox" name="toggler" task="${id}" ${checked}>
+            <label class="item__label">${name}</label>
+            <input type="text" class="item__edit" name="editer" value="${name}">
             <button class="btn btn-red destroy" type="button" task="${id}">X</button>
         </div>`;
 
-  const labelEditor = item.querySelector('.list-item__block-edit');
+  const labelEditor = item.querySelector('.item__edit');
 
   labelEditor.addEventListener('focusout', (event) => {
     if (currentTaskClicked.task !== null) {

@@ -10,75 +10,28 @@
     padding: 0;
 }
 
-.application {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 5px;
-    
-    &__title {
-        font-size: 22px;
-        text-align: center;
-        margin: 30px 0;
-    }
-
-    &__body {
-        background-color: white;
-
-        &-list {
-            display: flex;
-            flex-direction: column;
-            list-style: none;
-        }
-    }
-
-    &__footer {
-        display: flex;
-        position: relative;
-        padding: 5px;
-        align-items: center;
-
-        &-count {
-            position: absolute;
-            margin-left: 15px;
-            color: grey;
-        }
-
-        &-clear {
-            font-size: 14px;
-            position: absolute;
-            right: 15px;
-            color: grey;
-            cursor: pointer;
-
-            &:hover {
-                text-decoration: underline;
-            }
-        }
-    }
-}
-
-.filters {
-    margin: 10px 0;
-    flex: 1;
+.title {
+    font-size: 22px;
     text-align: center;
+    margin: 30px 0;
+}
 
-    &-button {
-        background: white;
-        padding: 0.35rem 0.5rem;
-        border: none;
-        cursor: pointer;
-        margin: 0 5px;
+.body {
+    background-color: white;
+
+    &__form {
+        display: flex;
+        align-items: center;
     }
 
-    &-button.active {
-        box-shadow: 0 0 5px 0px rgb(0 0 0 / 52%);
+    &__list {
+        display: flex;
+        flex-direction: column;
+        list-style: none;
     }
 }
 
-.form {
-    display: flex;
-    align-items: center;
-
+.add-form {
     &__check {
         position: absolute;
         transform: rotate(90deg);
@@ -112,71 +65,123 @@
     }
 }
 
-.shadow {
-    box-shadow: 0 0 10px 2px rgb(0 0 0 / 34%);
+.task-list {
+
+    &__item {
+        position: relative;
+        display: block;
+        padding: .75rem 1.25rem;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid rgba(0,0,0,.125);
+        color: grey;
+    
+        &:hover .destroy{
+            visibility: visible;
+        }
+    }
 }
 
-.list-item {
+.item {
+    display: flex;
+    align-items: center;
+
+    &__toggle {
+        min-width: 20px;
+        min-height: 20px;
+        margin-right: 15px;
+        border-radius: 50%;
+        appearance: none;
+        -webkit-appearance: none;
+        border: 1px solid #b9b9b9;
+        cursor: pointer;
+
+        &:checked {
+            background-color: rgb(var(--blue));
+        }
+    }
+
+    &__toggle:checked ~ &__label {
+        text-decoration: line-through;
+        color: rgb(128 128 128 / 55%);
+    }
+
+    &__label {
+        padding: 10px;
+
+        &.clicked {
+            display: none;
+        }
+    }
+
+    &__label.clicked ~ &__edit {
+        display: block;
+    }
+
+    &__edit {
+        display: none;
+        padding: .375rem .75rem;
+        font-size: 16px;
+        line-height: 1.5;
+        outline: none;
+        transition: 0.3s all;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        width: 100%;
+    }
+}
+
+.footer {
+    display: flex;
     position: relative;
-    display: block;
-    padding: .75rem 1.25rem;
-    margin-bottom: -1px;
-    background-color: #fff;
-    border: 1px solid rgba(0,0,0,.125);
-    color: grey;
+    padding: 5px;
+    align-items: center;
 
-    &:hover .destroy{
-        visibility: visible;
+    &__count {
+        position: absolute;
+        margin-left: 15px;
+        color: grey;
     }
 
-    &__block {
-        display: flex;
-        align-items: center;
+    &__clear {
+        font-size: 14px;
+        position: absolute;
+        right: 15px;
+        color: grey;
+        cursor: pointer;
 
-        &-toggle {
-            min-width: 20px;
-            min-height: 20px;
-            margin-right: 15px;
-            border-radius: 50%;
-            appearance: none;
-            -webkit-appearance: none;
-            border: 1px solid #b9b9b9;
-            cursor: pointer;
-
-            &:checked {
-                background-color: rgb(var(--blue));
-            }
-        }
-
-        &-toggle:checked ~ &__label {
-            text-decoration: line-through;
-            color: rgb(128 128 128 / 55%);
-        }
-
-        &-label {
-            padding: 10px;
-        }
-
-        &-label.clicked {
-            display: none;
-        }
-
-        &-label.clicked ~ &-edit {
-            display: block;
-        }
-
-        &-edit {
-            display: none;
-            padding: .375rem .75rem;
-            font-size: 16px;
-            line-height: 1.5;
-            outline: none;
-            transition: 0.3s all;
-            border: 1px solid #ced4da;
-            border-radius: .25rem;
-            width: 100%;
+        &:hover {
+            text-decoration: underline;
         }
     }
+}
+
+.application {
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 5px;
+}
+
+.filters {
+    margin: 10px 0;
+    flex: 1;
+    text-align: center;
+
+    &__button {
+        background: white;
+        padding: 0.35rem 0.5rem;
+        border: none;
+        cursor: pointer;
+        margin: 0 5px;
+
+        &.active {
+            box-shadow: 0 0 5px 0px rgb(0 0 0 / 52%);
+        }
+    }
+}
+
+.shadow {
+    box-shadow: 0 0 10px 2px rgb(0 0 0 / 34%);
 }
 
 .destroy {
