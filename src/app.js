@@ -7,6 +7,7 @@ import TaskListService from './services/tasklist.service';
 import EventEmitter from './emitter/emitter';
 import TaskInputComponent from './components/taskinput.component';
 import TaskListComponent from './components/tasklist.component';
+import TaskFooterComponent from './components/taskfooter.component';
 
 export default class Application {
   startup() {
@@ -18,6 +19,7 @@ export default class Application {
       .inSingletonScope();
     this.container.bind(TYPES.TaskInputComponent).to(TaskInputComponent);
     this.container.bind(TYPES.TaskListComponent).to(TaskListComponent);
+    this.container.bind(TYPES.TaskFooterComponent).to(TaskFooterComponent);
   }
 
   run() {
@@ -27,8 +29,10 @@ export default class Application {
 
     const taskInput = this.container.get(TYPES.TaskInputComponent);
     const taskList = this.container.get(TYPES.TaskListComponent);
+    const taskFooter = this.container.get(TYPES.TaskFooterComponent);
 
     console.log('taskInput', taskInput);
     console.log('taskList', taskList);
+    console.log('taskFooter', taskFooter);
   }
 }

@@ -36,23 +36,23 @@ export default class TaskListService {
 
     this.counterId += 1;
 
-    this.emitter.emit('LIST_CHANGED', this.getTasks());
+    this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
   }
 
   getTask(id) {
     return this.tasks.find((x) => x.id === id);
   }
 
-  getTasks() {
-    if (this.filter === null) {
+  getTasks(filter = null) {
+    if (filter === null) {
       return this.tasks.slice();
     }
-    return this.tasks.filter((x) => x.isChecked === this.filter);
+    return this.tasks.filter((x) => x.isChecked === filter);
   }
 
   applyFilter(filter) {
     this.filter = filter;
-    this.emitter.emit('LIST_CHANGED', this.getTasks());
+    this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
   }
 
   updateTask(task) {
@@ -66,7 +66,11 @@ export default class TaskListService {
   deleteTask(id) {
     const index = this.tasks.findIndex((x) => x.id === id);
     this.tasks.splice(index, 1);
-    this.emitter.emit('LIST_CHANGED', this.getTasks());
+    this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
+  }
+
+  isEmpty() {
+    return this.tasks.length === 0;
   }
 }
 
