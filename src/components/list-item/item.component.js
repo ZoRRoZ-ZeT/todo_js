@@ -8,6 +8,9 @@ export default class ItemComponent {
     this.taskData = task;
     this.emitter = emitter;
 
+    this.isClicked = false;
+    this.editing = false;
+
     this.element = document.createElement('li');
     this.element.classList.add('task-list__item');
 
@@ -36,6 +39,23 @@ export default class ItemComponent {
     label.classList.add('item__label');
     label.innerText = this.taskData.value;
 
+    label.addEventListener('click', () => {
+      if (this.isClicked) {
+        this.label.classList.add('clicked');
+        this.taskChanger.focus();
+        this.isClicked = false;
+        this.editing = true;
+        return;
+      }
+      this.isClicked = true;
+
+      setTimeout(() => {
+        if (!this.editing) {
+          this.isClicked = false;
+        }
+      }, 200);
+    });
+
     return label;
   }
 
@@ -60,11 +80,13 @@ export default class ItemComponent {
     taskChanger.value = this.taskData.value;
 
     const valueChanger = (value) => {
-      if (taskChanger.value === this.taskData.value) {
-        return;
+      this.label.classList.remove('clicked');
+      this.editing = false;
+      if (taskChanger.value !== this.taskData.value) {
+        this.taskData.value = value;
+        this.label.innerText = value;
+        this.emitter.emit('ITEM_CHANGED', this.taskData);
       }
-      this.taskData.value = value;
-      this.label.innerText = value;
     };
 
     taskChanger.addEventListener('focusout', () => {
