@@ -1,0 +1,11 @@
+.form-toggler {
+  transform: rotate(90deg);
+  margin-left: 15px;
+  background-color: white;
+
+  &::before {
+    content: '❯';
+    font-size: 22px;
+    padding: 5px;
+  }
+}

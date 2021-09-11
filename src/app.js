@@ -6,11 +6,11 @@ import TYPES from './constant/types';
 import TaskListService from './services/tasklist.service';
 import EventEmitter from './emitter/emitter';
 import TaskHeaderComponent from './components/header/taskheader.component';
-import TaskListComponent from './components/tasklist.component';
-import TaskFooterComponent from './components/taskfooter.component';
+import TaskListComponent from './components/task-list/tasklist.component';
+import TaskFooterComponent from './components/footer/taskfooter.component';
 
-export default class Application {
-  startup() {
+class Application {
+  initializeContainer() {
     this.container = new Container();
     this.container.bind(TYPES.EventEmitter).to(EventEmitter).inSingletonScope();
     this.container
@@ -23,12 +23,12 @@ export default class Application {
   }
 
   run() {
-    if (!this.container) {
-      return;
-    }
+    this.initializeContainer();
 
     this.taskHeader = this.container.get(TYPES.TaskHeaderComponent);
     this.taskList = this.container.get(TYPES.TaskListComponent);
     this.taskFooter = this.container.get(TYPES.TaskFooterComponent);
   }
 }
+
+export default Application;

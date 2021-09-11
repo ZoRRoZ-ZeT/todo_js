@@ -1,13 +1,14 @@
 const ELEMENTS = {
-  Input: 'taskInput',
-  Toggler: 'toggler',
-  List: 'list',
-  Button_All: 'allButton',
-  Button_Active: 'activeButton',
-  Button_Complete: 'completeButton',
-  Count: 'count',
-  Clear: 'clear',
-  Footer: 'footer',
+  FORM: 'form',
+  INPUT: 'taskInput',
+  TOGGLER: 'toggler',
+  LIST: 'list',
+  BUTTON_ALL: 'allButton',
+  BUTTON_ACTIVE: 'activeButton',
+  BUTTON_COMPLETE: 'completeButton',
+  COUNT: 'count',
+  CLEAR: 'clear',
+  FOOTER: 'footer',
 };
 
 export default ELEMENTS;

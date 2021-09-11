@@ -1,16 +1,12 @@
+import './taskinput.component.scss';
+
 /* eslint-disable no-unused-vars */
-import ELEMENTS from '../../../constant/elements';
+import ELEMENTS from '../../../../constant/elements';
 
-import TaskListService from '../../../services/tasklist.service';
-
-export default class TaskInputComponent {
-  /**
-   *
-   * @param {TaskListService} taskListService
-   */
+class TaskInputComponent {
   constructor(taskListService) {
     this.taskListService = taskListService;
-    this.inputElement = document.getElementById(ELEMENTS.Input);
+    this.inputElement = document.getElementById(ELEMENTS.INPUT);
 
     this.inputElement.addEventListener('keydown', (event) => {
       if (event.key === 'Enter') {
@@ -29,3 +25,5 @@ export default class TaskInputComponent {
     this.inputElement.value = '';
   }
 }
+
+export default TaskInputComponent;

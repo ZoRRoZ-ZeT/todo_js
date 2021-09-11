@@ -1,25 +1,19 @@
 import { decorate, inject, injectable } from 'inversify';
 import TYPES from '../constant/types';
 // eslint-disable-next-line no-unused-vars
-import EventEmitter from '../emitter/emitter';
 
-export default class TaskListService {
-  /**
-   *
-   * @param {EventEmitter} emitter
-   */
+class TaskListService {
   constructor(emitter) {
-    /** @type {Array.<{id,value,isChecked}} */
     this.tasks = [];
     this.emitter = emitter;
     this.counterId = 0;
     this.filter = null;
 
-    this.emitter.subscribe('ITEM_CHANGED', (task) => {
+    this.emitter.subscribe('CHANGE_ITEM', (task) => {
       this.updateTask(task);
     });
 
-    this.emitter.subscribe('ITEM_DELETED', (id) => {
+    this.emitter.subscribe('DELETE_ITEM', (id) => {
       this.deleteTask(id);
     });
   }
@@ -34,7 +28,7 @@ export default class TaskListService {
     this.tasks.push(newTask);
     this.counterId += 1;
 
-    this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
+    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
   }
 
   getTask(id) {
@@ -50,7 +44,7 @@ export default class TaskListService {
 
   applyFilter(filter) {
     this.filter = filter;
-    this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
+    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
   }
 
   updateTask(task) {
@@ -58,13 +52,13 @@ export default class TaskListService {
     oldTask.value = task.value;
     oldTask.isChecked = task.isChecked;
 
-    this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
+    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
   }
 
   deleteTask(id) {
     const index = this.tasks.findIndex((x) => x.id === id);
     this.tasks.splice(index, 1);
-    this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
+    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
   }
 
   isEmpty() {
@@ -74,3 +68,5 @@ export default class TaskListService {
 
 decorate(injectable(), TaskListService);
 decorate(inject(TYPES.EventEmitter), TaskListService, 0);
+
+export default TaskListService;

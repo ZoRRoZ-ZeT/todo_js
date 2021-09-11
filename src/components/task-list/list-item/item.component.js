@@ -1,9 +1,6 @@
-export default class ItemComponent {
-  /**
-   *
-   * @param {*} task
-   * @param {EventEmitter} emitter
-   */
+import './item.component.scss';
+
+class ItemComponent {
   constructor(emitter, task) {
     this.taskData = task;
     this.emitter = emitter;
@@ -67,7 +64,7 @@ export default class ItemComponent {
 
     toggler.addEventListener('click', () => {
       this.taskData.isChecked = toggler.checked;
-      this.emitter.emit('ITEM_CHANGED', this.taskData);
+      this.emitter.emit('CHANGE_ITEM', this.taskData);
     });
 
     return toggler;
@@ -85,7 +82,7 @@ export default class ItemComponent {
       if (taskChanger.value !== this.taskData.value) {
         this.taskData.value = value;
         this.label.innerText = value;
-        this.emitter.emit('ITEM_CHANGED', this.taskData);
+        this.emitter.emit('CHANGE_ITEM', this.taskData);
       }
     };
 
@@ -107,7 +104,7 @@ export default class ItemComponent {
     button.innerText = 'X';
 
     button.addEventListener('click', () => {
-      this.emitter.emit('ITEM_DELETED', this.taskData.id);
+      this.emitter.emit('DELETE_ITEM', this.taskData.id);
     });
 
     return button;
@@ -117,3 +114,5 @@ export default class ItemComponent {
     return this.element;
   }
 }
+
+export default ItemComponent;

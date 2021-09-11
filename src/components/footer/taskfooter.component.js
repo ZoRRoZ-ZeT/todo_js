@@ -1,31 +1,25 @@
+import './taskfooter.component.scss';
+
+/* eslint-disable no-unused-vars */
 import { decorate, inject, injectable } from 'inversify';
-import ELEMENTS from '../constant/elements';
-import TYPES from '../constant/types';
-// eslint-disable-next-line no-unused-vars
-import TaskListService from '../services/tasklist.service';
+import ELEMENTS from '../../constant/elements';
+import TYPES from '../../constant/types';
 
-export default class TaskFooterComponent {
-  /**
-   *
-   * @param {TaskListService} taskListService
-   */
-  constructor(taskListService) {
+class TaskFooterComponent {
+  constructor(taskListService, emitter) {
     this.taskListService = taskListService;
+    this.emitter = emitter;
 
-    this.footer = document.getElementById(ELEMENTS.Footer);
+    this.footer = document.getElementById(ELEMENTS.FOOTER);
 
-    this.allButton = document.getElementById(ELEMENTS.Button_All);
-    this.activeButton = document.getElementById(ELEMENTS.Button_Active);
-    this.completeButton = document.getElementById(ELEMENTS.Button_Complete);
+    this.allButton = document.getElementById(ELEMENTS.BUTTON_ALL);
+    this.activeButton = document.getElementById(ELEMENTS.BUTTON_ACTIVE);
+    this.completeButton = document.getElementById(ELEMENTS.BUTTON_COMPLETE);
 
-    this.leftCount = document.getElementById(ELEMENTS.Count);
-    this.clearButton = document.getElementById(ELEMENTS.Clear);
+    this.leftCount = document.getElementById(ELEMENTS.COUNT);
+    this.clearButton = document.getElementById(ELEMENTS.CLEAR);
 
-    this.taskListService.emitter.subscribe('ITEM_CHANGED', () => {
-      this.updateCount();
-    });
-
-    this.taskListService.emitter.subscribe('LIST_CHANGED', () => {
+    this.emitter.subscribe('RENDER_LIST', () => {
       this.updateCount();
     });
 
@@ -80,3 +74,6 @@ export default class TaskFooterComponent {
 
 decorate(injectable(), TaskFooterComponent);
 decorate(inject(TYPES.TaskListService), TaskFooterComponent, 0);
+decorate(inject(TYPES.EventEmitter), TaskFooterComponent, 1);
+
+export default TaskFooterComponent;

@@ -1,28 +1,21 @@
+import './tasklist.component.scss';
+
 import { decorate, inject, injectable } from 'inversify';
-import ELEMENTS from '../constant/elements';
-import TYPES from '../constant/types';
+import ELEMENTS from '../../constant/elements';
+import TYPES from '../../constant/types';
 // eslint-disable-next-line no-unused-vars
-import EventEmitter from '../emitter/emitter';
 import ItemComponent from './list-item/item.component';
 
-export default class TaskListComponent {
-  /**
-   *
-   * @param {EventEmitter} emitter
-   */
+class TaskListComponent {
   constructor(emitter) {
-    this.list = document.getElementById(ELEMENTS.List);
+    this.list = document.getElementById(ELEMENTS.LIST);
     this.emitter = emitter;
 
-    this.emitter.subscribe('LIST_CHANGED', (tasks) => {
+    this.emitter.subscribe('RENDER_LIST', (tasks) => {
       this.render(tasks);
     });
   }
 
-  /**
-   *
-   * @param {Array.<id,value,isChecked>} tasks
-   */
   render(tasks) {
     this.list.innerHTML = '';
     tasks.forEach((task) => {
@@ -34,3 +27,5 @@ export default class TaskListComponent {
 
 decorate(injectable(), TaskListComponent);
 decorate(inject(TYPES.EventEmitter), TaskListComponent, 0);
+
+export default TaskListComponent;

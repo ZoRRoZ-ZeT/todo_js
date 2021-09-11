@@ -1,6 +1,6 @@
 import { decorate, injectable } from 'inversify';
 
-export default class EventEmitter {
+class EventEmitter {
   constructor() {
     this.events = {};
   }
@@ -22,3 +22,5 @@ export default class EventEmitter {
 }
 
 decorate(injectable(), EventEmitter);
+
+export default EventEmitter;
