@@ -60,7 +60,7 @@ export default class TaskListService {
     oldTask.value = task.value;
     oldTask.isChecked = task.isChecked;
 
-    console.log(this.tasks);
+    this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
   }
 
   deleteTask(id) {

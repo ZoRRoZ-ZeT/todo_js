@@ -1,9 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { decorate, inject, injectable } from 'inversify';
-import ELEMENTS from '../constant/elements';
-import TYPES from '../constant/types';
+import ELEMENTS from '../../../constant/elements';
 
-import TaskListService from '../services/tasklist.service';
+import TaskListService from '../../../services/tasklist.service';
 
 export default class TaskInputComponent {
   /**
@@ -31,6 +29,3 @@ export default class TaskInputComponent {
     this.inputElement.value = '';
   }
 }
-
-decorate(injectable(), TaskInputComponent);
-decorate(inject(TYPES.TaskListService), TaskInputComponent, 0);
