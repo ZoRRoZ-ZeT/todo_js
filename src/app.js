@@ -6,6 +6,7 @@ import TYPES from './constant/types';
 import TaskListService from './services/tasklist.service';
 import EventEmitter from './emitter/emitter';
 import TaskInputComponent from './components/taskinput.component';
+import TaskListComponent from './components/tasklist.component';
 
 export default class Application {
   startup() {
@@ -16,6 +17,7 @@ export default class Application {
       .to(TaskListService)
       .inSingletonScope();
     this.container.bind(TYPES.TaskInputComponent).to(TaskInputComponent);
+    this.container.bind(TYPES.TaskListComponent).to(TaskListComponent);
   }
 
   run() {
@@ -24,6 +26,9 @@ export default class Application {
     }
 
     const taskInput = this.container.get(TYPES.TaskInputComponent);
+    const taskList = this.container.get(TYPES.TaskListComponent);
+
     console.log('taskInput', taskInput);
+    console.log('taskList', taskList);
   }
 }

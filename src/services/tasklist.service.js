@@ -13,6 +13,15 @@ export default class TaskListService {
     this.tasks = [];
     this.emitter = emitter;
     this.counterId = 0;
+    this.filter = null;
+
+    this.emitter.subscribe('ITEM_CHANGED', (task) => {
+      this.updateTask(task);
+    });
+
+    this.emitter.subscribe('ITEM_DELETED', (id) => {
+      this.deleteTask(id);
+    });
   }
 
   addTask(value) {
@@ -34,17 +43,24 @@ export default class TaskListService {
     return this.tasks.find((x) => x.id === id);
   }
 
-  getTasks(filter = null) {
-    if (filter === null) {
+  getTasks() {
+    if (this.filter === null) {
       return this.tasks.slice();
     }
-    return this.tasks.filter((x) => x.isChecked === filter);
+    return this.tasks.filter((x) => x.isChecked === this.filter);
+  }
+
+  applyFilter(filter) {
+    this.filter = filter;
+    this.emitter.emit('LIST_CHANGED', this.getTasks());
   }
 
   updateTask(task) {
     const oldTask = this.getTask(task.id);
     oldTask.value = task.value;
     oldTask.isChecked = task.isChecked;
+
+    console.log(this.tasks);
   }
 
   deleteTask(id) {
