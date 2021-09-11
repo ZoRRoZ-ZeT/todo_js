@@ -1,0 +1,42 @@
+.footer {
+  display: flex;
+  position: relative;
+  padding: 5px;
+  align-items: center;
+
+  &__count {
+    position: absolute;
+    margin-left: 15px;
+    color: grey;
+  }
+
+  &__clear {
+    font-size: 14px;
+    position: absolute;
+    right: 15px;
+    color: grey;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
+  }
+}
+
+.filters {
+  margin: 10px 0;
+  flex: 1;
+  text-align: center;
+
+  &__button {
+    background: white;
+    padding: 0.35rem 0.5rem;
+    border: none;
+    cursor: pointer;
+    margin: 0 5px;
+
+    &.active {
+        box-shadow: 0 0 5px 0px rgb(0 0 0 / 52%);
+    }
+  }
+}

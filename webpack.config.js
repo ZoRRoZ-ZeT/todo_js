@@ -28,6 +28,7 @@ module.exports = {
     static: './dist',
     open: true,
   },
+  devtool: 'source-map',
   plugins: [
     new HtmlWebpackPlugin({
       title: 'ToDo - JS Application',

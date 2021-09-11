@@ -1,0 +1,53 @@
+.item {
+  display: flex;
+  align-items: center;
+
+  &__toggle {
+    min-width: 20px;
+    min-height: 20px;
+    margin-right: 15px;
+    border-radius: 50%;
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #b9b9b9;
+    cursor: pointer;
+
+    &:checked {
+      background-color: rgb(var(--blue));
+    }
+  }
+
+  &__toggle:checked ~ &__label {
+    text-decoration: line-through;
+    color: rgb(128 128 128 / 55%);
+  }
+
+  &__label {
+    padding: 10px;
+
+    &.clicked {
+      display: none;
+    }
+  }
+
+  &__label.clicked ~ &__edit {
+    display: block;
+  }
+
+  &__edit {
+    display: none;
+    padding: .375rem .75rem;
+    font-size: 16px;
+    line-height: 1.5;
+    outline: none;
+    transition: 0.3s all;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    width: 100%;
+  }
+}
+
+.destroy {
+  visibility: hidden;
+  margin-left: auto;
+}
