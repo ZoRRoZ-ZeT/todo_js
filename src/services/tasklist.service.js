@@ -32,8 +32,6 @@ export default class TaskListService {
     };
 
     this.tasks.push(newTask);
-    console.log(newTask);
-
     this.counterId += 1;
 
     this.emitter.emit('LIST_CHANGED', this.getTasks(this.filter));
