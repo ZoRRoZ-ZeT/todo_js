@@ -1,8 +1,8 @@
 import './tasklist.component.scss';
 
 import { decorate, inject, injectable } from 'inversify';
-import ELEMENTS from '../../constant/elements';
-import TYPES from '../../constant/types';
+import ELEMENTS from '../../constants/elements';
+import TYPES from '../../constants/types';
 // eslint-disable-next-line no-unused-vars
 import ItemComponent from './list-item/item.component';
 

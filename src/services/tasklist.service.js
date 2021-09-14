@@ -1,12 +1,14 @@
+import 'regenerator-runtime/runtime';
 import { decorate, inject, injectable } from 'inversify';
-import TYPES from '../constant/types';
+import TYPES from '../constants/types';
 // eslint-disable-next-line no-unused-vars
 
 class TaskListService {
-  constructor(emitter) {
+  constructor(emitter, apiService) {
     this.tasks = [];
     this.emitter = emitter;
-    this.counterId = 0;
+    this.apiService = apiService;
+
     this.filter = null;
 
     this.emitter.subscribe('CHANGE_ITEM', (task) => {
@@ -16,57 +18,64 @@ class TaskListService {
     this.emitter.subscribe('DELETE_ITEM', (id) => {
       this.deleteTask(id);
     });
+
+    this.initialize();
   }
 
-  addTask(value) {
+  async initialize() {
+    this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
+  }
+
+  async addTask(value) {
     const newTask = {
-      id: this.counterId,
       value,
       isChecked: false,
     };
-
-    this.tasks.push(newTask);
-    this.counterId += 1;
-
-    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
-  }
-
-  getTask(id) {
-    return this.tasks.find((x) => x.id === id);
-  }
-
-  getTasks(filter = null) {
-    if (filter === null) {
-      return this.tasks.slice();
+    const response = await this.apiService.post(newTask);
+    if (response) {
+      this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
     }
-    return this.tasks.filter((x) => x.isChecked === filter);
   }
 
-  applyFilter(filter) {
+  async getTask(id) {
+    const task = await this.apiService.getSingle(id);
+    return task;
+  }
+
+  async getTasks(filter = null) {
+    const tasks = await this.apiService.getAll();
+    if (filter === null) {
+      return tasks;
+    }
+    return tasks.filter((x) => x.isChecked === filter);
+  }
+
+  async applyFilter(filter) {
     this.filter = filter;
-    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
+    this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
   }
 
-  updateTask(task) {
-    const oldTask = this.getTask(task.id);
-    oldTask.value = task.value;
-    oldTask.isChecked = task.isChecked;
-
-    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
+  async updateTask(task) {
+    const updatedTask = await this.apiService.put(task);
+    console.log(updatedTask);
+    this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
   }
 
-  deleteTask(id) {
-    const index = this.tasks.findIndex((x) => x.id === id);
-    this.tasks.splice(index, 1);
-    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
+  async deleteTask(id) {
+    const deletedTask = await this.apiService.delete(id);
+    console.log(deletedTask);
+
+    this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
   }
 
-  isEmpty() {
-    return this.tasks.length === 0;
+  async isEmpty() {
+    const tasks = await this.getTasks(this.filter);
+    return tasks.length === 0;
   }
 }
 
 decorate(injectable(), TaskListService);
 decorate(inject(TYPES.EventEmitter), TaskListService, 0);
+decorate(inject(TYPES.TaskApiService), TaskListService, 1);
 
 export default TaskListService;

@@ -2,8 +2,8 @@ import './taskfooter.component.scss';
 
 /* eslint-disable no-unused-vars */
 import { decorate, inject, injectable } from 'inversify';
-import ELEMENTS from '../../constant/elements';
-import TYPES from '../../constant/types';
+import ELEMENTS from '../../constants/elements';
+import TYPES from '../../constants/types';
 
 class TaskFooterComponent {
   constructor(taskListService, emitter) {
@@ -23,17 +23,16 @@ class TaskFooterComponent {
       this.updateCount();
     });
 
-    this.updateCount();
-
     this.initializeButtons();
   }
 
-  updateCount() {
-    if (this.taskListService.isEmpty()) {
+  async updateCount() {
+    const tasks = await this.taskListService.getTasks();
+    if (!tasks.length) {
       this.footer.classList.add('hide');
       return;
     }
-    const count = this.taskListService.getTasks(false).length;
+    const count = tasks.filter((x) => x.isChecked === false).length;
     this.footer.classList.remove('hide');
     this.leftCount.innerText = `${count} items left`;
   }
@@ -57,8 +56,8 @@ class TaskFooterComponent {
       this.taskListService.applyFilter(true);
     };
 
-    this.clearButton.onclick = () => {
-      const toRemove = this.taskListService.getTasks(true);
+    this.clearButton.onclick = async () => {
+      const toRemove = await this.taskListService.getTasks(true);
       toRemove.forEach((task) => {
         this.taskListService.deleteTask(task.id);
       });
