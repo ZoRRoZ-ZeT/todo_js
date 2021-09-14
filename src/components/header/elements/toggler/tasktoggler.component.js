@@ -1,7 +1,7 @@
 import './tasktoggler.component.scss';
 
 /* eslint-disable no-unused-vars */
-import ELEMENTS from '../../../../constant/elements';
+import ELEMENTS from '../../../../constants/elements';
 
 class TaskTogglerComponent {
   constructor(taskListService) {

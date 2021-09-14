@@ -2,8 +2,8 @@ import './taskfooter.component.scss';
 
 /* eslint-disable no-unused-vars */
 import { decorate, inject, injectable } from 'inversify';
-import ELEMENTS from '../../constant/elements';
-import TYPES from '../../constant/types';
+import ELEMENTS from '../../constants/elements';
+import TYPES from '../../constants/types';
 
 class TaskFooterComponent {
   constructor(taskListService, emitter) {
@@ -23,17 +23,16 @@ class TaskFooterComponent {
       this.updateCount();
     });
 
-    this.updateCount();
-
     this.initializeButtons();
   }
 
   updateCount() {
-    if (this.taskListService.isEmpty()) {
+    const tasks = this.taskListService.getTasks();
+    if (!tasks.length) {
       this.footer.classList.add('hide');
       return;
     }
-    const count = this.taskListService.getTasks(false).length;
+    const count = tasks.filter((x) => x.isChecked === false).length;
     this.footer.classList.remove('hide');
     this.leftCount.innerText = `${count} items left`;
   }
