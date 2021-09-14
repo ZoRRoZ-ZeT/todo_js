@@ -17,10 +17,8 @@ class TaskInputComponent {
 
   submitTask() {
     if (this.inputElement.value === '') {
-      this.inputElement.classList.add('invalid');
       return;
     }
-    this.inputElement.classList.remove('invalid');
     this.taskListService.addTask(this.inputElement.value);
     this.inputElement.value = '';
   }

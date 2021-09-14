@@ -1,15 +1,20 @@
 .task-list {
+  border-top: 1px solid #e6e6e6;
+
   &__item {
     position: relative;
     display: block;
-    padding: .75rem 1.25rem;
-    margin-bottom: -1px;
+    padding: 7px 0px 7px 8px;
     background-color: #fff;
-    border: 1px solid rgba(0,0,0,.125);
-    color: grey;
+    border-bottom: 1px solid #ededed;
+    color: #4d4d4d;
 
     &:hover .destroy{
         visibility: visible;
     }
+  }
+
+  li:last-child {
+    border-bottom: none;
   }
 }
