@@ -13,8 +13,8 @@ class TaskTogglerComponent {
     });
   }
 
-  async toggleTasks() {
-    const tasks = await this.taskListService.getTasks();
+  toggleTasks() {
+    const tasks = this.taskListService.getTasks();
     const fillValue = tasks.reduce(
       (result, item) => result && item.isChecked,
       true

@@ -26,8 +26,8 @@ class TaskFooterComponent {
     this.initializeButtons();
   }
 
-  async updateCount() {
-    const tasks = await this.taskListService.getTasks();
+  updateCount() {
+    const tasks = this.taskListService.getTasks();
     if (!tasks.length) {
       this.footer.classList.add('hide');
       return;
@@ -56,8 +56,8 @@ class TaskFooterComponent {
       this.taskListService.applyFilter(true);
     };
 
-    this.clearButton.onclick = async () => {
-      const toRemove = await this.taskListService.getTasks(true);
+    this.clearButton.onclick = () => {
+      const toRemove = this.taskListService.getTasks(true);
       toRemove.forEach((task) => {
         this.taskListService.deleteTask(task.id);
       });

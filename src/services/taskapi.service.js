@@ -3,7 +3,7 @@ import { decorate, injectable } from 'inversify';
 import environment from '../environment';
 
 class TaskApiService {
-  async getSingle(id) {
+  getSingle(id) {
     return fetch(`${environment.apiUrl}/${id}`)
       .then((response) => response.json())
       .then((data) => {
@@ -15,7 +15,7 @@ class TaskApiService {
       });
   }
 
-  async getAll() {
+  getAll() {
     return fetch(environment.apiUrl)
       .then((response) => response.json())
       .then((data) => {
@@ -27,9 +27,7 @@ class TaskApiService {
       });
   }
 
-  async post(body) {
-    console.log(JSON.stringify(body));
-
+  createTask(body) {
     return fetch(environment.apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -38,14 +36,13 @@ class TaskApiService {
       .then((response) => response.json())
       .then((data) => {
         if (data.statusCode === 200) {
-          console.log(data.payload);
           return data.payload;
         }
         throw new Error(data);
       });
   }
 
-  put(body) {
+  updateTask(body) {
     return fetch(environment.apiUrl, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -61,7 +58,7 @@ class TaskApiService {
       });
   }
 
-  delete(id) {
+  deleteTask(id) {
     return fetch(`${environment.apiUrl}/${id}`, {
       method: 'DELETE',
     })

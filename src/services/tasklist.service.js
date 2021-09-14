@@ -23,54 +23,73 @@ class TaskListService {
   }
 
   async initialize() {
+    this.tasks = [...(await this.apiService.getAll())];
     this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
   }
 
-  async addTask(value) {
-    const newTask = {
-      value,
-      isChecked: false,
-    };
-    const response = await this.apiService.post(newTask);
-    if (response) {
-      this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
+  addTask(value) {
+    try {
+      const newTask = {
+        value,
+        isChecked: false,
+      };
+
+      this.apiService.createTask(newTask).then((response) => {
+        this.tasks.push(response);
+        this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
+      });
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  async getTask(id) {
-    const task = await this.apiService.getSingle(id);
-    return task;
+  getTask(id) {
+    return this.tasks.find((x) => x.id === +id);
   }
 
-  async getTasks(filter = null) {
-    const tasks = await this.apiService.getAll();
+  getTasks(filter = null) {
     if (filter === null) {
-      return tasks;
+      return this.tasks.slice();
     }
-    return tasks.filter((x) => x.isChecked === filter);
+    return this.tasks.filter((x) => x.isChecked === filter);
   }
 
-  async applyFilter(filter) {
+  applyFilter(filter) {
     this.filter = filter;
-    this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
+    this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
   }
 
-  async updateTask(task) {
-    const updatedTask = await this.apiService.put(task);
-    console.log(updatedTask);
-    this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
+  updateTask(task) {
+    try {
+      this.apiService.updateTask(task).then((response) => {
+        const oldTask = this.getTask(response.id);
+        oldTask.value = response.value;
+        oldTask.isChecked = response.isChecked;
+
+        this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async deleteTask(id) {
-    const deletedTask = await this.apiService.delete(id);
-    console.log(deletedTask);
-
-    this.emitter.emit('RENDER_LIST', await this.getTasks(this.filter));
+  deleteTask(id) {
+    try {
+      this.apiService.deleteTask(id).then((response) => {
+        const deletedTask = response;
+        const deletedIndex = this.tasks.findIndex(
+          (x) => x.id === deletedTask.id
+        );
+        this.tasks.splice(deletedIndex, 1);
+        this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async isEmpty() {
-    const tasks = await this.getTasks(this.filter);
-    return tasks.length === 0;
+  isEmpty() {
+    return this.tasks.length === 0;
   }
 }
 
