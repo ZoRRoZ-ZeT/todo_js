@@ -1,11 +1,15 @@
 .form-input {
-  padding: .375rem .75rem;
-  padding-left: 55px;
-  padding-top: 10px;
-  font-size: 16px;
-  line-height: 1.5;
-
+  padding: 19px 20px 18px 60px;
+  font-size: 24px;
+  line-height: 1.4rem;
+  border: none;
+  box-shadow: inset 0 -2px 1px rgb(0 0 0 / 3%);
   &.invalid {
       border-color: red !important;
+  }
+
+  &::placeholder {
+    font-style: italic;
+    color: #e6e6e6;
   }
 }

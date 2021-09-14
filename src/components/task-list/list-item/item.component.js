@@ -100,8 +100,8 @@ class ItemComponent {
 
   deleteButtonInitialize() {
     const button = document.createElement('button');
-    button.classList.add('btn', 'btn-red', 'destroy');
-    button.innerText = 'X';
+    button.classList.add('btn', 'btn-empty', 'destroy');
+    button.innerText = '×';
 
     button.addEventListener('click', () => {
       this.emitter.emit('DELETE_ITEM', this.taskData.id);

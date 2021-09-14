@@ -33,6 +33,10 @@ class TaskFooterComponent {
       return;
     }
     const count = tasks.filter((x) => x.isChecked === false).length;
+    this.clearButton.classList.add('hide');
+    if (count !== tasks.length) {
+      this.clearButton.classList.remove('hide');
+    }
     this.footer.classList.remove('hide');
     this.leftCount.innerText = `${count} items left`;
   }
