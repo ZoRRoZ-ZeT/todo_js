@@ -50,7 +50,6 @@ class TaskListService {
     try {
       const newTask = {
         value,
-        isChecked: false,
       };
 
       this.apiService.createTask(newTask).then((response) => {
@@ -83,9 +82,11 @@ class TaskListService {
   updateTask(task) {
     try {
       this.apiService.updateTask(task).then((response) => {
+        console.log(response);
         const oldTask = this.getTask(response.id);
         oldTask.value = response.value;
         oldTask.isChecked = response.isChecked;
+        oldTask.priority = response.priority;
 
         this.emitter.emit('RENDER_LIST', this.getTasks(this.filter));
       });

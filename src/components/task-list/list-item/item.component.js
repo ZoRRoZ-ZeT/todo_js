@@ -1,3 +1,7 @@
+/* eslint-disable import/extensions */
+import DropdownComponent from './dropdown/dropdown.component.js';
+import PRIORITIES from '../../../constants/priorities.js';
+
 /* eslint-disable no-underscore-dangle */
 class ItemComponent {
   constructor(emitter, task) {
@@ -10,6 +14,17 @@ class ItemComponent {
     this.element = document.createElement('li');
     this.element.classList.add('task-list__item');
 
+    const priorityKey = Object.keys(PRIORITIES).find(
+      (key) => PRIORITIES[key].value === this.taskData.priority
+    );
+    this.element.style.backgroundColor = PRIORITIES[priorityKey].color;
+
+    this.emitter.subscribe('CHANGE_PRIORITY', (taskData) => {
+      if (this.taskData === taskData) {
+        this.emitter.emit('CHANGE_ITEM', this.taskData);
+      }
+    });
+
     this.initialize();
   }
 
@@ -20,11 +35,13 @@ class ItemComponent {
     this.toggler = this.togglerInitialize();
     this.label = this.labelInitialize();
     this.taskChanger = this.taskChangerInitialize();
+    this.dropdown = this.dropdownInitialize();
     this.deleteButton = this.deleteButtonInitialize();
 
     container.appendChild(this.toggler);
     container.appendChild(this.label);
     container.appendChild(this.taskChanger);
+    container.appendChild(this.dropdown);
     container.appendChild(this.deleteButton);
 
     this.element.appendChild(container);
@@ -79,9 +96,13 @@ class ItemComponent {
     const valueChanger = (value) => {
       this.label.classList.remove('clicked');
       this.editing = false;
-      if (taskChanger.value !== this.taskData.value) {
-        this.taskData.value = value;
-        this.label.innerText = value;
+      const formattedValue = value.replace('\\s+', ' ').trim();
+      if (formattedValue === '') {
+        this.taskChanger.value = this.taskData.value;
+        return;
+      }
+      if (formattedValue !== this.taskData.value) {
+        this.taskData.value = formattedValue;
         this.emitter.emit('CHANGE_ITEM', this.taskData);
       }
     };
@@ -98,9 +119,15 @@ class ItemComponent {
     return taskChanger;
   }
 
+  dropdownInitialize() {
+    const dropdown = new DropdownComponent(this.emitter, this.taskData);
+
+    return dropdown.getHtmlComponent();
+  }
+
   deleteButtonInitialize() {
     const button = document.createElement('button');
-    button.classList.add('btn', 'btn-empty', 'destroy');
+    button.classList.add('btn', 'btn-empty', 'destroy', 'item__button');
     button.innerText = '×';
 
     button.addEventListener('click', () => {

@@ -12,6 +12,9 @@ class TaskApiService {
           return data.payload;
         }
         throw new Error(data);
+      })
+      .catch((error) => {
+        throw new Error(error.message);
       });
   }
 
@@ -24,6 +27,9 @@ class TaskApiService {
           return data.payload;
         }
         throw new Error(data);
+      })
+      .catch((error) => {
+        throw new Error(error.message);
       });
   }
 
@@ -39,6 +45,9 @@ class TaskApiService {
           return data.payload;
         }
         throw new Error(data);
+      })
+      .catch((error) => {
+        throw new Error(error.message);
       });
   }
 
@@ -48,6 +57,12 @@ class TaskApiService {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
     })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response;
+      })
       .then((response) => response.json())
       .then((data) => {
         if (data.statusCode === 200) {
@@ -68,6 +83,9 @@ class TaskApiService {
           return data.payload;
         }
         throw new Error(data);
+      })
+      .catch((error) => {
+        throw new Error(error.message);
       });
   }
 }

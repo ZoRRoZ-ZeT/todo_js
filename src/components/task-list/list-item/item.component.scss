@@ -1,3 +1,5 @@
+@import './dropdown/dropdown.component.scss';
+
 .item {
   font-size: inherit;
   display: flex;
@@ -49,7 +51,12 @@
     width: 100%;
   }
 
-  button {
+  &__dropdown {
+    position: absolute;
+    right: 25px;
+  }
+
+  &__button {
     margin-right: 20px;
   }
 }

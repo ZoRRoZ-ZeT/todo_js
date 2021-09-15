@@ -16,6 +16,7 @@ class TaskListComponent {
 
   render(tasks) {
     this.list.innerHTML = '';
+    console.log(tasks);
     tasks.forEach((task) => {
       const item = new ItemComponent(this.emitter, task);
       this.list.appendChild(item.getHtmlComponent());
