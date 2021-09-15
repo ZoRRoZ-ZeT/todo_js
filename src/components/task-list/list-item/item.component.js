@@ -104,7 +104,7 @@ class ItemComponent {
     button.innerText = '×';
 
     button.addEventListener('click', () => {
-      this.emitter.emit('DELETE_ITEM', this.taskData._id);
+      this.emitter.emit('DELETE_ITEM', this.taskData.id);
     });
 
     return button;

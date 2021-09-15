@@ -63,7 +63,7 @@ class TaskListService {
   }
 
   getTask(id) {
-    return this.tasks.find((x) => x._id === id);
+    return this.tasks.find((x) => x.id === id);
   }
 
   getTasks(filter = STATUSES.ALL) {
@@ -83,7 +83,7 @@ class TaskListService {
   updateTask(task) {
     try {
       this.apiService.updateTask(task).then((response) => {
-        const oldTask = this.getTask(response._id);
+        const oldTask = this.getTask(response.id);
         oldTask.value = response.value;
         oldTask.isChecked = response.isChecked;
 

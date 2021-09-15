@@ -31,9 +31,9 @@ class TaskFooterComponent {
       this.footer.classList.add('hide');
       return;
     }
-    const count = this.taskListService.getTasks(STATUSES.COMPLETED).length;
+    const count = this.taskListService.getTasks(STATUSES.ACTIVE).length;
     this.clearButton.classList.add('hide');
-    if (count) {
+    if (count !== tasks.length) {
       this.clearButton.classList.remove('hide');
     }
     this.footer.classList.remove('hide');
