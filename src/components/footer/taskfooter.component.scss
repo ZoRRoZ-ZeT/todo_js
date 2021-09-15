@@ -4,8 +4,15 @@
   padding: 9px 15px 11px 15px;
   height: 20px;
   align-items: center;
+  justify-content: space-between;
   background-color: white;
   border-top: 1px solid #e6e6e6;
+
+  @include respond-to(sm) {
+    flex-direction: column;
+    height: fit-content;
+    align-items: stretch;
+  }
 
   &::before {
     content: '';
@@ -22,16 +29,26 @@
   }
 
   &__count {
-    position: absolute;
+    font-size: 14px;
     color: grey;
+
+    @include respond-to(sm) {
+      position: absolute;
+      bottom: 10px;
+    }
   }
 
   &__clear {
     font-size: 14px;
-    position: absolute;
     right: 15px;
     color: grey;
     cursor: pointer;
+
+    @include respond-to(sm) {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+    }
 
     &:hover {
         text-decoration: underline;
@@ -45,6 +62,11 @@
   text-align: center;
   position: relative;
 
+  @include respond-to(sm) {
+    margin: 5px 0 30px 0;
+    display: flex;
+  }
+
   &__button {
     background: white;
     color: grey;
@@ -55,6 +77,10 @@
     margin: 0px 3px;
     border: 1px solid transparent;
     border-radius: 3px;
+
+    @include respond-to(sm) {
+      width: 100%;
+    }
 
     &.active {
       border-color: rgba(175, 47, 47, 0.2)

@@ -51,7 +51,6 @@ class TaskApiService {
       .then((response) => response.json())
       .then((data) => {
         if (data.statusCode === 200) {
-          console.log(data.payload);
           return data.payload;
         }
         throw new Error(data);

@@ -1,5 +1,4 @@
-import './item.component.scss';
-
+/* eslint-disable no-underscore-dangle */
 class ItemComponent {
   constructor(emitter, task) {
     this.taskData = task;
@@ -64,6 +63,7 @@ class ItemComponent {
 
     toggler.addEventListener('click', () => {
       this.taskData.isChecked = toggler.checked;
+      console.log(this.taskData);
       this.emitter.emit('CHANGE_ITEM', this.taskData);
     });
 
@@ -104,7 +104,7 @@ class ItemComponent {
     button.innerText = '×';
 
     button.addEventListener('click', () => {
-      this.emitter.emit('DELETE_ITEM', this.taskData.id);
+      this.emitter.emit('DELETE_ITEM', this.taskData._id);
     });
 
     return button;

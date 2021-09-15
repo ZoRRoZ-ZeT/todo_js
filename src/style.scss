@@ -1,3 +1,10 @@
+@import "mixins/breakpoints";
+
+// Components
+@import "./components/footer/taskfooter.component.scss";
+@import "./components/header/taskheader.component.scss";
+@import "./components/task-list/tasklist.component.scss";
+
 :root {
     --blue: 3, 169, 244;
     --darkblue: 33, 150, 243;
@@ -11,17 +18,32 @@
 }
 
 body {
-    font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: #f5f5f5;
 }
 
 h1 {
     position: absolute;
-    top: -120px;
     width: 100%;
     text-align: center;
-    font-size: 100px;
     font-weight: 100!important;
+
+    @include respond-to(sm) {
+        top: -70px;
+        font-size: 50px;
+    }
+    @include respond-to(md) {
+        top: -90px;
+        font-size: 70px;
+    }
+    @include respond-to(lg) {
+        top: -110px;
+        font-size: 90px;
+    }
+    @include respond-to(xl) {
+        top: -120px;
+        font-size: 100px;
+    }
 }
 
 .title {
@@ -30,10 +52,26 @@ h1 {
 }
 
 .application {
-    min-width: 230px;
-    max-width: 550px;
+    
     margin: 130px auto;
     position: relative;
+
+    @include respond-to(sm) {
+        max-width: 95%;
+        font-size: 18px;
+    }
+    @include respond-to(md) {
+        max-width: 85%;
+        font-size: 20px;
+    }
+    @include respond-to(lg) {
+        width: 550px;
+        font-size: 22px;
+    }
+    @include respond-to(xl) {
+        width: 550px;
+        font-size: 24px;
+    }
 }
 
 .shadow {

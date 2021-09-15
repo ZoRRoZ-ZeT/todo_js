@@ -1,5 +1,3 @@
-import './taskinput.component.scss';
-
 /* eslint-disable no-unused-vars */
 import ELEMENTS from '../../../../constants/elements';
 

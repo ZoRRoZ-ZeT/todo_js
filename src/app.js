@@ -33,6 +33,8 @@ class Application {
   run() {
     this.initializeContainer();
 
+    console.log(window.location.pathname);
+
     this.taskHeader = this.container.get(TYPES.TaskHeaderComponent);
     this.taskList = this.container.get(TYPES.TaskListComponent);
     this.taskFooter = this.container.get(TYPES.TaskFooterComponent);

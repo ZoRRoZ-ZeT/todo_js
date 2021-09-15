@@ -1,5 +1,5 @@
 .item {
-  font-size: 24px;
+  font-size: inherit;
   display: flex;
   align-items: center;
 
@@ -40,7 +40,7 @@
   &__edit {
     display: none;
     padding: 3px 6px;
-    font-size: 24px;
+    font-size: inherit;
     line-height: 1.5;
     outline: none;
     transition: 0.3s all;
