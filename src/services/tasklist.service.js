@@ -1,6 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import 'regenerator-runtime/runtime';
 import { decorate, inject, injectable } from 'inversify';
 import TYPES from '../constants/types';
+import STATUSES from '../constants/statuses';
 // eslint-disable-next-line no-unused-vars
 
 class TaskListService {
@@ -9,7 +11,14 @@ class TaskListService {
     this.emitter = emitter;
     this.apiService = apiService;
 
-    this.filter = null;
+    this.mapStatusToFilterPredicate = {
+      [STATUSES.ACTIVE]: (item) => item.isChecked === false,
+      [STATUSES.COMPLETED]: (item) => item.isChecked === true,
+      [STATUSES.ALL]: null,
+    };
+
+    this.parseUrl();
+    console.log(this.filter);
 
     this.emitter.subscribe('CHANGE_ITEM', (task) => {
       this.updateTask(task);
@@ -20,6 +29,16 @@ class TaskListService {
     });
 
     this.initialize();
+  }
+
+  parseUrl() {
+    const { pathname } = window.location;
+    this.filter = STATUSES.ALL;
+    if (pathname === '/active') {
+      this.filter = STATUSES.ACTIVE;
+    } else if (pathname === '/completed') {
+      this.filter = STATUSES.COMPLETED;
+    }
   }
 
   async initialize() {
@@ -44,14 +63,16 @@ class TaskListService {
   }
 
   getTask(id) {
-    return this.tasks.find((x) => x.id === +id);
+    return this.tasks.find((x) => x.id === id);
   }
 
-  getTasks(filter = null) {
-    if (filter === null) {
-      return this.tasks.slice();
-    }
-    return this.tasks.filter((x) => x.isChecked === filter);
+  getTasks(filter = STATUSES.ALL) {
+    const filterPredicate = this.mapStatusToFilterPredicate[filter];
+    const filteredTasks = filterPredicate
+      ? this.tasks.filter(filterPredicate)
+      : this.tasks.slice();
+
+    return filteredTasks;
   }
 
   applyFilter(filter) {

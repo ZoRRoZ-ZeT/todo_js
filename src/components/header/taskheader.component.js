@@ -1,5 +1,3 @@
-import './taskheader.component.scss';
-
 /* eslint-disable no-unused-vars */
 import { decorate, inject, injectable } from 'inversify';
 import ELEMENTS from '../../constants/elements';

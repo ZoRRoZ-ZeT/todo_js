@@ -1,3 +1,6 @@
+@import "./elements/input/taskinput.component.scss";
+@import "./elements/toggler/tasktoggler.component.scss";
+
 .add-form {
   &__toggler {
     position: absolute;
@@ -9,8 +12,6 @@
 
   &__input {
     width: 100%;
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
     outline: none;
     transition: 0.3s all;   
   }

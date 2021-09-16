@@ -1,9 +1,8 @@
-import './taskfooter.component.scss';
-
 /* eslint-disable no-unused-vars */
 import { decorate, inject, injectable } from 'inversify';
 import ELEMENTS from '../../constants/elements';
 import TYPES from '../../constants/types';
+import STATUSES from '../../constants/statuses';
 
 class TaskFooterComponent {
   constructor(taskListService, emitter) {
@@ -32,7 +31,7 @@ class TaskFooterComponent {
       this.footer.classList.add('hide');
       return;
     }
-    const count = tasks.filter((x) => x.isChecked === false).length;
+    const count = this.taskListService.getTasks(STATUSES.ACTIVE).length;
     this.clearButton.classList.add('hide');
     if (count !== tasks.length) {
       this.clearButton.classList.remove('hide');
@@ -44,20 +43,23 @@ class TaskFooterComponent {
   initializeButtons() {
     this.allButton.onclick = () => {
       this.resetColors();
+      window.history.pushState('', '', '/all');
       this.allButton.classList.add('active');
-      this.taskListService.applyFilter(null);
+      this.taskListService.applyFilter(STATUSES.ALL);
     };
 
     this.activeButton.onclick = () => {
       this.resetColors();
+      window.history.pushState('', '', '/active');
       this.activeButton.classList.add('active');
-      this.taskListService.applyFilter(false);
+      this.taskListService.applyFilter(STATUSES.ACTIVE);
     };
 
     this.completeButton.onclick = () => {
       this.resetColors();
+      window.history.pushState('', '', '/complete');
       this.completeButton.classList.add('active');
-      this.taskListService.applyFilter(true);
+      this.taskListService.applyFilter(STATUSES.COMPLETED);
     };
 
     this.clearButton.onclick = () => {

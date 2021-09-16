@@ -1,5 +1,3 @@
-import './tasklist.component.scss';
-
 import { decorate, inject, injectable } from 'inversify';
 import ELEMENTS from '../../constants/elements';
 import TYPES from '../../constants/types';
