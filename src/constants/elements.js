@@ -9,6 +9,7 @@ const ELEMENTS = {
   COUNT: 'count',
   CLEAR: 'clear',
   FOOTER: 'footer',
+  MODAL: 'myModal',
 };
 
 export default ELEMENTS;

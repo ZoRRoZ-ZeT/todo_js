@@ -4,6 +4,7 @@
 @import "./components/footer/taskfooter.component.scss";
 @import "./components/header/taskheader.component.scss";
 @import "./components/task-list/tasklist.component.scss";
+@import "./components/modal/modal.component.scss";
 
 :root {
     --blue: 3, 169, 244;
@@ -129,6 +130,10 @@ h1 {
 
 .hide {
     display: none;
+}
+
+.show {
+    display:block;
 }
 
 .mark-high {
