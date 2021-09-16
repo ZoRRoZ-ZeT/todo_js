@@ -130,3 +130,23 @@ h1 {
 .hide {
     display: none;
 }
+
+.mark-high {
+    border: 1px solid #ff110099;
+    background-color: #ff110099;
+}
+
+.mark-medium {
+    border: 1px solid #ffe50080;
+    background-color: #ffe50080;
+}
+
+.mark-low {
+    border: 1px solid #89ff00d9;
+    background-color: #89ff00d9;
+}
+
+.mark-none {
+    border: 1px solid black;
+    background-color: transparent;
+}

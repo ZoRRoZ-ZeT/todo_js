@@ -3,72 +3,57 @@ import { decorate, injectable } from 'inversify';
 import environment from '../environment';
 
 class TaskApiService {
-  getSingle(id) {
-    return fetch(`${environment.apiUrl}/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.statusCode === 200) {
-          console.log(data.payload);
-          return data.payload;
-        }
-        throw new Error(data);
-      });
+  async getSingle(id) {
+    const response = await fetch(`${environment.apiUrl}/${id}`);
+    const data = await this.getDataFromResponse(response);
+
+    return data;
   }
 
-  getAll() {
-    return fetch(environment.apiUrl)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.statusCode === 200) {
-          console.log(data.payload);
-          return data.payload;
-        }
-        throw new Error(data);
-      });
+  async getAll() {
+    const response = await fetch(environment.apiUrl);
+    const data = await this.getDataFromResponse(response);
+
+    return data;
   }
 
-  createTask(body) {
-    return fetch(environment.apiUrl, {
+  async createTask(body) {
+    const response = await fetch(environment.apiUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.statusCode === 200) {
-          return data.payload;
-        }
-        throw new Error(data);
-      });
+    });
+    const data = await this.getDataFromResponse(response);
+
+    return data;
   }
 
-  updateTask(body) {
-    return fetch(environment.apiUrl, {
+  async updateTask(body) {
+    const response = await fetch(environment.apiUrl, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.statusCode === 200) {
-          return data.payload;
-        }
-        throw new Error(data);
-      });
+    });
+    const data = await this.getDataFromResponse(response);
+
+    return data;
   }
 
-  deleteTask(id) {
-    return fetch(`${environment.apiUrl}/${id}`, {
+  async deleteTask(id) {
+    const response = await fetch(`${environment.apiUrl}/${id}`, {
       method: 'DELETE',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.statusCode === 200) {
-          console.log(data.payload);
-          return data.payload;
-        }
-        throw new Error(data);
-      });
+    });
+    const data = await this.getDataFromResponse(response);
+
+    return data;
+  }
+
+  async getDataFromResponse(response) {
+    const data = await response.json();
+    if (data.statusCode === 200) {
+      return data.payload;
+    }
+    throw new Error(JSON.stringify(data));
   }
 }
 

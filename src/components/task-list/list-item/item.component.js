@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+import DropdownComponent from './dropdown/dropdown.component.js';
 /* eslint-disable no-underscore-dangle */
 class ItemComponent {
   constructor(emitter, task) {
@@ -5,7 +7,7 @@ class ItemComponent {
     this.emitter = emitter;
 
     this.isClicked = false;
-    this.editing = false;
+    this.isEditing = false;
 
     this.element = document.createElement('li');
     this.element.classList.add('task-list__item');
@@ -20,11 +22,13 @@ class ItemComponent {
     this.toggler = this.togglerInitialize();
     this.label = this.labelInitialize();
     this.taskChanger = this.taskChangerInitialize();
+    this.dropdown = this.dropdownInitialize();
     this.deleteButton = this.deleteButtonInitialize();
 
     container.appendChild(this.toggler);
     container.appendChild(this.label);
     container.appendChild(this.taskChanger);
+    container.appendChild(this.dropdown);
     container.appendChild(this.deleteButton);
 
     this.element.appendChild(container);
@@ -40,13 +44,13 @@ class ItemComponent {
         this.label.classList.add('clicked');
         this.taskChanger.focus();
         this.isClicked = false;
-        this.editing = true;
+        this.isEditing = true;
         return;
       }
       this.isClicked = true;
 
       setTimeout(() => {
-        if (!this.editing) {
+        if (!this.isEditing) {
           this.isClicked = false;
         }
       }, 200);
@@ -63,7 +67,6 @@ class ItemComponent {
 
     toggler.addEventListener('click', () => {
       this.taskData.isChecked = toggler.checked;
-      console.log(this.taskData);
       this.emitter.emit('CHANGE_ITEM', this.taskData);
     });
 
@@ -78,10 +81,14 @@ class ItemComponent {
 
     const valueChanger = (value) => {
       this.label.classList.remove('clicked');
-      this.editing = false;
-      if (taskChanger.value !== this.taskData.value) {
-        this.taskData.value = value;
-        this.label.innerText = value;
+      this.isEditing = false;
+      const formattedValue = value.replace('\\s+', ' ').trim();
+      if (formattedValue === '') {
+        this.taskChanger.value = this.taskData.value;
+        return;
+      }
+      if (formattedValue !== this.taskData.value) {
+        this.taskData.value = formattedValue;
         this.emitter.emit('CHANGE_ITEM', this.taskData);
       }
     };
@@ -98,9 +105,15 @@ class ItemComponent {
     return taskChanger;
   }
 
+  dropdownInitialize() {
+    const dropdown = new DropdownComponent(this.emitter, this.taskData);
+
+    return dropdown.getHtmlComponent();
+  }
+
   deleteButtonInitialize() {
     const button = document.createElement('button');
-    button.classList.add('btn', 'btn-empty', 'destroy');
+    button.classList.add('btn', 'btn-empty', 'destroy', 'item__button');
     button.innerText = '×';
 
     button.addEventListener('click', () => {

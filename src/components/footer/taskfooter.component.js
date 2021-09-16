@@ -63,7 +63,7 @@ class TaskFooterComponent {
     };
 
     this.clearButton.onclick = () => {
-      const toRemove = this.taskListService.getTasks(true);
+      const toRemove = this.taskListService.getTasks(STATUSES.COMPLETED);
       toRemove.forEach((task) => {
         this.taskListService.deleteTask(task.id);
       });
