@@ -21,12 +21,6 @@ class DropdownComponent {
       this.dropdownContent.classList.toggle('show');
     });
 
-    dropdownBtn.addEventListener('mousedown', (event) => {
-      console.log(event.target);
-      if (!this.dropdownContent.hasChildNodes(event.target))
-        this.dropdownContent.classList.remove('show');
-    });
-
     this.dropdownBlock.appendChild(dropdownBtn);
     this.dropdownBlock.appendChild(this.dropdownContent);
   }

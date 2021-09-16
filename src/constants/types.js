@@ -5,6 +5,7 @@ const TYPES = {
   TaskListComponent: Symbol.for('TaskListComponent'),
   TaskFooterComponent: Symbol.for('TaskFooterComponent'),
   TaskApiService: Symbol.for('TaskApiService'),
+  ModalComponent: Symbol.for('ModelComponent'),
 };
 
 export default TYPES;
