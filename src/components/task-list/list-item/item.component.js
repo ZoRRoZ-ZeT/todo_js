@@ -1,7 +1,5 @@
 /* eslint-disable import/extensions */
 import DropdownComponent from './dropdown/dropdown.component.js';
-import PRIORITIES from '../../../constants/priorities.js';
-
 /* eslint-disable no-underscore-dangle */
 class ItemComponent {
   constructor(emitter, task) {
@@ -9,21 +7,10 @@ class ItemComponent {
     this.emitter = emitter;
 
     this.isClicked = false;
-    this.editing = false;
+    this.isEditing = false;
 
     this.element = document.createElement('li');
     this.element.classList.add('task-list__item');
-
-    const priorityKey = Object.keys(PRIORITIES).find(
-      (key) => PRIORITIES[key].value === this.taskData.priority
-    );
-    this.element.style.backgroundColor = PRIORITIES[priorityKey].color;
-
-    this.emitter.subscribe('CHANGE_PRIORITY', (taskData) => {
-      if (this.taskData === taskData) {
-        this.emitter.emit('CHANGE_ITEM', this.taskData);
-      }
-    });
 
     this.initialize();
   }
@@ -57,13 +44,13 @@ class ItemComponent {
         this.label.classList.add('clicked');
         this.taskChanger.focus();
         this.isClicked = false;
-        this.editing = true;
+        this.isEditing = true;
         return;
       }
       this.isClicked = true;
 
       setTimeout(() => {
-        if (!this.editing) {
+        if (!this.isEditing) {
           this.isClicked = false;
         }
       }, 200);
@@ -80,7 +67,6 @@ class ItemComponent {
 
     toggler.addEventListener('click', () => {
       this.taskData.isChecked = toggler.checked;
-      console.log(this.taskData);
       this.emitter.emit('CHANGE_ITEM', this.taskData);
     });
 
@@ -95,7 +81,7 @@ class ItemComponent {
 
     const valueChanger = (value) => {
       this.label.classList.remove('clicked');
-      this.editing = false;
+      this.isEditing = false;
       const formattedValue = value.replace('\\s+', ' ').trim();
       if (formattedValue === '') {
         this.taskChanger.value = this.taskData.value;
