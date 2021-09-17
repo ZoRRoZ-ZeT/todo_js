@@ -84,7 +84,6 @@ class TaskListService {
       this.apiService
         .updateTask(task)
         .then((response) => {
-          console.log(response);
           const oldTask = this.getTask(response.id);
           oldTask.value = response.value;
           oldTask.isChecked = response.isChecked;

@@ -21,6 +21,17 @@ class DropdownComponent {
       this.dropdownContent.classList.toggle('show');
     });
 
+    document.addEventListener('mousedown', (event) => {
+      let node = event.target;
+      while (node) {
+        if (node === this.dropdownBlock) {
+          return;
+        }
+        node = node.parentNode;
+      }
+      this.dropdownContent.classList.remove('show');
+    });
+
     this.dropdownBlock.appendChild(dropdownBtn);
     this.dropdownBlock.appendChild(this.dropdownContent);
   }
